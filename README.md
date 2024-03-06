@@ -8,6 +8,6 @@
 
 <p>
 
-It was in fact not a calculator lmao
+Yikes, 💀💀💀
   
 </p>
