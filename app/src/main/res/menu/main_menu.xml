@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/home"
+            android:title="Home"
+            android:icon="@drawable/home"/>
+        <item android:id="@+id/trending"
+            android:title="Trending"
+            android:icon="@drawable/trend"/>
+        <item android:id="@+id/add"
+            android:title="New reminder"
+            android:icon="@drawable/add"/>
+
+    </group>
+
+    <item android:title="Profile">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/check_profile"
+                    android:title="Check profile"
+                    android:icon="@drawable/person"/>
+                <item android:id="@+id/about"
+                    android:title="About"
+                    android:icon="@drawable/about"/>
+            </group>
+        </menu>
+
+    </item>
+
+    <item android:title="Account">
+
+        <menu>
+            <item android:id="@+id/exit"
+                android:title="Logout"
+                android:icon="@drawable/exit"/>
+        </menu>
+
+    </item>
+
+</menu>
