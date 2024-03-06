@@ -44,27 +44,42 @@ public class MainContent extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_content);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        // Seting up some global variables
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Toolbar refers to the design and custom functionallity of Actionbars
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        // Setting a custom actionbar and hiding its title as I have created a custom title
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // setting up The icon that displays in the actionbar
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
+
+        // update real-time the navigationBar to the toogle boolean (open state / close state)
         toggle.syncState();
 
         if(savedInstanceState == null) {
+            // setting the home fragment as the default after this activity is called
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.home);
         }
 
+        // Checking for Backpress calls
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                /*
+                     checks if the navigation is open or not
+                     if its open then close the navigation on backpress
+                     else return to the previous activity instead
+                */
                 if(drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+
                     drawerLayout.closeDrawer(Gravity.RIGHT);
                 }else {
                     finish();
@@ -72,9 +87,11 @@ public class MainContent extends AppCompatActivity implements NavigationView.OnN
             }
         };
 
+        // uummmm yeah... returns and initiate whatever is inside that "handleOnBackPressed()"
         ComponentActivity activity = this;
         getOnBackPressedDispatcher().addCallback(activity, callback);
 
+        // Setting up the Notifications panel
         dialog = new Dialog(this);
         ImageButton notificationOpen = findViewById(R.id.notification_open);
         notificationOpen.setOnClickListener(v -> {
@@ -82,19 +99,12 @@ public class MainContent extends AppCompatActivity implements NavigationView.OnN
         });
     }
 
-    public void showDialog(Dialog d) {
-        d.setContentView(R.layout.notification_dialog);
-
-        TextView close = d.findViewById(R.id.notification_exit_button);
-        close.setOnClickListener(v -> {
-            d.dismiss();
-        });
-        d.show();
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        /*
+            Compare Menu items, and then assigning the respective Fragment to the FrameLayout (fragment_container)
+         */
         if(item.getItemId() == R.id.home)
             callFragment(this, R.id.fragment_container, new HomeFragment());
         else if(item.getItemId() == R.id.trending)
@@ -114,7 +124,19 @@ public class MainContent extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
+    // Custom Methods / Functions -------------------------------------------------------------
     static void callFragment(AppCompatActivity activity, int viewHolder, Fragment frag) {
         activity.getSupportFragmentManager().beginTransaction().replace(viewHolder, frag).commit();
+    }
+
+    public void showDialog(Dialog d) {
+        // set a custom design layout for the dialog
+        d.setContentView(R.layout.notification_dialog);
+
+        TextView close = d.findViewById(R.id.notification_exit_button);
+        close.setOnClickListener(v -> {
+            d.dismiss();
+        });
+        d.show();
     }
 }

@@ -24,16 +24,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Setting up some global variables
+        selectedDot = R.drawable.selected_dot;
+        emptyDot = R.drawable.empty_dot;
+        pager = findViewById(R.id.pager);
 
+        // Setting up a custom animation upon application opening
         RelativeLayout layout = findViewById(R.id.mainLayout);
         AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setFillAfter(true);
         animation.setDuration(800);
         layout.startAnimation(animation);
 
-
-        selectedDot = R.drawable.selected_dot;
-        emptyDot = R.drawable.empty_dot;
+        // Array of dots that will change on slider page
         TextView[] dots = {
                 findViewById(R.id.dot1),
                 findViewById(R.id.dot2),
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        pager = findViewById(R.id.pager);
+        // Custom Adapter for the page slider
         PagerAdapter adapter = new PanelAdapter(this, this);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -60,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Custom Methods / Functions ------------------------------------------------------------
     public void startContent() {
-        Intent i = new Intent(this, MainContent.class);
+        // Ignore the Bundle I was planning on adding a transition effect for activity changes :(
+
+        Intent i = new Intent(this, MainContent.class); // Targeting a specific activity
         Bundle b = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
         startActivity(i, b);
     }
